@@ -6,6 +6,7 @@ Project Checkpoint
 
 **Yifan Jiang(yjiang1)**		**Xiangguang Zheng(xiangguz)**
 
+<br/>
 What we have done so far
 ------------------------
 
@@ -16,6 +17,7 @@ After that, we implemented the basic LSTM in python and have proved its correctn
 
 We also implemented a C++ version LSTM using cuBLAS. We have tested the correctness using PBT dataset but haven't benchmarked the performance yet.
 
+<br/>
 How we are doing so far
 -----------------------
 
@@ -23,22 +25,24 @@ We are behind the schedule according to our original proposal. The reason is tha
 
 Also, we adjust our deliverable to a broader scope. Instead of scheduling the operations just for LSTM, we are planning to schedule the operation for all RNN. Therefore, we need to make our scheduler to be more flexible that it can take cares variable types of structure of RNN. Thus, we adjust our schedule by adding an additional task to implement and benchmark 3 to 4 variants of RNN in order to learn the variant and invariant between different RNN. 
 
+<br/>
 Detailed schedule for the coming weeks
 --------------------------------------
 
 **4.26~5.1**<br/>
 - Finish the implementation of the baseline version (classic LSTM) (Yifan)
 - Schedule LSTM efficiently on GPU with parallelism techniques learnt from previous researches. (Yifan, Xiangguang)
-**5.2~5.4**<br/>
+<br/>**5.2~5.4**<br/>
 - Implement four more RNN variants and optimize the scheduling. (2 by Yifan, 2 by Xiangguang)
-**5.5~5.7**<br/>
+<br/>**5.5~5.7**<br/>
 - Decide the invariants among different RNN variants and design a dynamic RNN that wrap all the RNN variants.
 - Further optimize the scheduling (performance) of the dynamic RNN.
-**5.8~5.9**<br/>
+<br/>**5.8~5.9**<br/>
 - Build a DSL(a Python library) that allows users to customize RNN cells, build and evaluate RNN, which is compiled into cuBLAS blocks and scheduled on GPU.
-**5.10**<br/>
+<br/>**5.10**<br/>
 - Wrap up and work on the final report.
 
+<br/>
 What we can present on May 12nd
 -------------------------------
 Our ideal plan for the parallelism competition is to:
@@ -46,12 +50,14 @@ Our ideal plan for the parallelism competition is to:
 - A graph of running time comparison between the LSTM baseline, our scheduling optimized LSTM, and cuDNN’s fused LSTM implementation.
 - A graph of running time comparison between our optimized LSTM and LSTM implemented with dynamic RNN.
 
+<br/>
 Some issues that we concern
 ---------------------------
 - Need to figure out variant and invariant in different types of RNNs.
 - Scheduling dynamic RNN cells could be tricky.
 - How to design an easy-to-use DSL for users, while enable them to express complex RNN structures.
 
+<br/>
 Reference
 ---------
 \[1]: CS231n Lecture 10 - Recurrent Neural Networks: https://www.youtube.com/watch?v=iX5V1WpxxkY\ <br/>
