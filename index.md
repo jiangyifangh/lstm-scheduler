@@ -1,4 +1,4 @@
-[Proposal](/index.md)  [Checkpoint](/checkpoint.md)
+[Proposal](/index.md)          [Checkpoint](/checkpoint.md)
 
 **Yifan Jiang(yjiang1)**		**Xiangguang Zheng(xiangguz)**
 
