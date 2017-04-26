@@ -2,57 +2,51 @@
 
 **Yifan Jiang(yjiang1)**		**Xiangguang Zheng(xiangguz)**
 
-### Summary
+### What we have done so far
 
-We are going to build a mini-DSL(a Python library) for defining an LSTM, and then generate code for evaluating the network by assembling basic blocks from cuDNN or cuBLAS.
+First of all, we spent some time on learning the background information about RNN and LSTM, 
+cuDNN and cuBLAS API and Possible optimization for the RNN.  We studied the basic RNN from stanford lecture([1]), LSTM from several blogs and papers ([2], [3], [4]), cuBLAS and cuDNN API from nvidia official documentation([5], [6]), and optimization approaches used by cuDNN from a blog and paper posted by nvidia([7]).
 
-### Background
+After that, we implemented the basic LSTM in python and have proved its correctness using a simple example that predicts a sequence of real numbers.
 
-Implementing cuDNN operations are very expensive, therefore there are only basic operations defined in cuDNN. If the operation is not defined in cuDNN, the performance would be seriously downgraded, because the alternative implementation in python or C wouldn't take advantages of GPU. So the current situation is that the performance would be either extremely good if cuDNN has implemented the operation or extremely bad if cuDNN does not. We want an intermediate solution that is able to auto generate the code by assembling the basic block from cuDNN in order to get not optimal but acceptable performance, but mostly, much more convenient compared to implementing a new operation directly from cuDNN and provides a more generic interface.
+We also implemented a C++ version LSTM using cuBLAS. We have tested the correctness using PBT dataset but haven't benchmarked the performance yet.
 
-### Challenges
+### How we are doing so far
 
-- Though both of us have adequate knowledge in deep learning (mainly convolutional neural network), we have no previous experience in RNN/LSTM. It would take us around a week to fully understand it and implement it in Python.
-- Designing the scheduling language is an important component of this project, which requires us a deep understanding of LSTM and a careful thought of what primitives we would include in the language. Neither of us is familiar with code generation. We need to spend some time to learn the code generation procedure.
+We are behind the schedule according to our original proposal. The reason is that our original proposal is too busy at the first two weeks, where we didn't leave enough time to learn background knowledge about deep learning and cuda. We will adjust our schedule in later section based on what we have achieved so far. 
 
-### Resources
+Also, we adjust our deliverable to a broader scope. Instead of scheduling the operations just for LSTM, we are planning to schedule the operation for all RNN. Therefore, we need to make our scheduler to be more flexible that it can take cares variable types of structure of RNN. Thus, we adjust our schedule by adding an additional task to implement and benchmark 3 to 4 variants of RNN in order to learn the variant and invariant between different RNN. 
 
-We plan to use P2.xlarge from Amazon aws, equipping with NVIDIA Tesla K80 GPU, or **equivalent** machines equipped with GPUs. 
+### Detailed schedule for the coming weeks
 
-Since no previous work has been done in this area so we will start from scratch. The reference we will review includes LSTM/RNN, Halide code base(which has a scheduling language for image processing code), cuDNN documentation, Numba and code generation tutorial etc.
+**4.26~5.1**
+- Finish the implementation of the baseline version (classic LSTM) (Yifan)
+- Schedule LSTM efficiently on GPU with parallelism techniques learnt from previous researches. (Yifan, Xiangguang)
+**5.2~5.4**
+- Implement four more RNN variants and optimize the scheduling. (2 by Yifan, 2 by Xiangguang)
+**5.5~5.7**
+- Decide the invariants among different RNN variants and design a dynamic RNN that wrap all the RNN variants.
+- Further optimize the scheduling (performance) of the dynamic RNN.
+**5.8~5.9**
+- Build a DSL(a Python library) that allows users to customize RNN cells, build and evaluate RNN, which is compiled into cuBLAS blocks and scheduled on GPU.
+**5.10**
+- Wrap up and work on the final report.
 
-### Goals and Deliverables
+### What we can present on May 12nd
+Our ideal plan for the parallelism competition is to:
+- A piece of python code that define a RNN using the DSL developed by us.
+- A graph of running time comparison between the LSTM baseline, our scheduling optimized LSTM, and cuDNN’s fused LSTM implementation.
+- A graph of running time comparison between our optimized LSTM and LSTM implemented with dynamic RNN.
 
-The deliverable is a DSL (a Python program) that is able to define an LSTM from user's input using basic block implementation from cuDNN. Our goal is to achieve significant speed up compared to the python/C implementation by exploring parallelism to the max extent and the performance should be close to the native cuDNN implementation. The extra goal is to make our DSL to support more generic deep learning model.
+### Some issues that we concern
+- Need to figure out variant and invariant in different types of RNNs.
+- Scheduling dynamic RNN cells could be tricky.
+- How to design an easy-to-use DSL for users, while enable them to express complex RNN structures.
 
-Extra Goal: make our DSL to support more generic deep learning model. Specifically, our DSL is able to support more deep learning models without need to code extra interfaces for those.
-
-### Platform Choice
-
-The language we decided to use to implement our DSL module is Python, since it is easy to use and learn for non-programmer and has good community support for deep learning packages. In addition, the level of the language is about right, where the user only defines what to do, not how to do, and the developer can optimize the operations a lot under the hood.
-
-### Schedule
-
-**4.11 ~ 4.17** 
-
-- Research and learning (LSTM, cuDNN/cuBLAS, code generation).
-- Implement a baseline LSTM model in Python.
-
-**4.18 ~ 4.24**
-
-- Experiment with cuDNN code generation from simple operations.
-- Implement LSTM using cuDNN/cuBLAS.
-- Design DSL primitives to describe LSTM variants.
-
-**4.25 ~ 5.1**
-
-- Prepare final exam on 5.1
-- Generate cuDNN/cuBLAS blocks from DSL.
-
-**5.2 ~ 5.8**
-
-- Optimize scheduling decision/LSTM performance. 
-
-**5.9 ~ 5.11**
-
-- Prepare for final report and presentation (if selected)
+### Reference
+\[1]: CS231n Lecture 10 - Recurrent Neural Networks: https://www.youtube.com/watch?v=iX5V1WpxxkY\
+\[2]: Christopher Olah. Understanding LSTM Networks: http://colah.github.io/posts/2015-08-Understanding-LSTMs/
+\[3]: Andrej Karpathy. The Unreasonable Effectiveness of Recurrent Neural Networks: http://karpathy.github.io/2015/05/21/rnn-effectiveness/
+\[4]: Lipton, Z. C., Berkowitz, J., & Elkan, C. (2015). A Critical Review of Recurrent Neural Networks for Sequence Learning.
+\[5]: Nvidia. cuBLAS toolkit documentation: http://docs.nvidia.com/cuda/cublas/#axzz4fJQIdbFQ
+\[6]: Nvidia. cuDNN User Manual: https://developer.nvidia.com/cudnn
