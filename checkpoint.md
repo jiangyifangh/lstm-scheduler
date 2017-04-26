@@ -26,17 +26,17 @@ Also, we adjust our deliverable to a broader scope. Instead of scheduling the op
 Detailed schedule for the coming weeks
 --------------------------------------
 
-**4.26~5.1**\
+**4.26~5.1**<br/>
 - Finish the implementation of the baseline version (classic LSTM) (Yifan)
 - Schedule LSTM efficiently on GPU with parallelism techniques learnt from previous researches. (Yifan, Xiangguang)
-**5.2~5.4**\
+**5.2~5.4**<br/>
 - Implement four more RNN variants and optimize the scheduling. (2 by Yifan, 2 by Xiangguang)
-**5.5~5.7**\
+**5.5~5.7**<br/>
 - Decide the invariants among different RNN variants and design a dynamic RNN that wrap all the RNN variants.
 - Further optimize the scheduling (performance) of the dynamic RNN.
-**5.8~5.9**\
+**5.8~5.9**<br/>
 - Build a DSL(a Python library) that allows users to customize RNN cells, build and evaluate RNN, which is compiled into cuBLAS blocks and scheduled on GPU.
-**5.10**\
+**5.10**<br/>
 - Wrap up and work on the final report.
 
 What we can present on May 12nd
@@ -54,9 +54,9 @@ Some issues that we concern
 
 Reference
 ---------
-\[1]: CS231n Lecture 10 - Recurrent Neural Networks: https://www.youtube.com/watch?v=iX5V1WpxxkY\
-\[2]: Christopher Olah. Understanding LSTM Networks: http://colah.github.io/posts/2015-08-Understanding-LSTMs/
-\[3]: Andrej Karpathy. The Unreasonable Effectiveness of Recurrent Neural Networks: http://karpathy.github.io/2015/05/21/rnn-effectiveness/
-\[4]: Lipton, Z. C., Berkowitz, J., & Elkan, C. (2015). A Critical Review of Recurrent Neural Networks for Sequence Learning.
-\[5]: Nvidia. cuBLAS toolkit documentation: http://docs.nvidia.com/cuda/cublas/#axzz4fJQIdbFQ
-\[6]: Nvidia. cuDNN User Manual: https://developer.nvidia.com/cudnn
+\[1]: CS231n Lecture 10 - Recurrent Neural Networks: https://www.youtube.com/watch?v=iX5V1WpxxkY\ <br/>
+\[2]: Christopher Olah. Understanding LSTM Networks: http://colah.github.io/posts/2015-08-Understanding-LSTMs/ <br/>
+\[3]: Andrej Karpathy. The Unreasonable Effectiveness of Recurrent Neural Networks: http://karpathy.github.io/2015/05/21/rnn-effectiveness/ <br/>
+\[4]: Lipton, Z. C., Berkowitz, J., & Elkan, C. (2015). A Critical Review of Recurrent Neural Networks for Sequence Learning. <br/>
+\[5]: Nvidia. cuBLAS toolkit documentation: http://docs.nvidia.com/cuda/cublas/#axzz4fJQIdbFQ <br/>
+\[6]: Nvidia. cuDNN User Manual: https://developer.nvidia.com/cudnn <br/>
