@@ -29,14 +29,18 @@ Detailed schedule for the coming weeks
 **4.26~5.1**<br/>
 - Finish the implementation of the baseline version (classic LSTM) (Yifan)
 - Schedule LSTM efficiently on GPU with parallelism techniques learnt from previous researches. (Yifan, Xiangguang)
-<br/>**5.2~5.4**<br/>
+
+**5.2~5.4**<br/>
 - Implement four more RNN variants and optimize the scheduling. (2 by Yifan, 2 by Xiangguang)
-<br/>**5.5~5.7**<br/>
+
+**5.5~5.7**<br/>
 - Decide the invariants among different RNN variants and design a dynamic RNN that wrap all the RNN variants.
 - Further optimize the scheduling (performance) of the dynamic RNN.
-<br/>**5.8~5.9**<br/>
+
+**5.8~5.9**<br/>
 - Build a DSL(a Python library) that allows users to customize RNN cells, build and evaluate RNN, which is compiled into cuBLAS blocks and scheduled on GPU.
-<br/>**5.10**<br/>
+
+**5.10**<br/>
 - Wrap up and work on the final report.
 
 What we can present on May 12nd
