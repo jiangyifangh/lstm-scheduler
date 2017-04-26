@@ -1,4 +1,8 @@
-[Proposal](/index.md)          [Checkpoint](/checkpoint.md)
+[Proposal](/index.md)&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
+[Checkpoint](/checkpoint.md)
+
+Project Proposal
+==================
 
 **Yifan Jiang(yjiang1)**		**Xiangguang Zheng(xiangguz)**
 
