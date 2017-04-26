@@ -6,7 +6,6 @@ Project Checkpoint
 
 **Yifan Jiang(yjiang1)**		**Xiangguang Zheng(xiangguz)**
 
-<br/>
 What we have done so far
 ------------------------
 
@@ -17,7 +16,6 @@ After that, we implemented the basic LSTM in python and have proved its correctn
 
 We also implemented a C++ version LSTM using cuBLAS. We have tested the correctness using PBT dataset but haven't benchmarked the performance yet.
 
-<br/>
 How we are doing so far
 -----------------------
 
@@ -25,7 +23,6 @@ We are behind the schedule according to our original proposal. The reason is tha
 
 Also, we adjust our deliverable to a broader scope. Instead of scheduling the operations just for LSTM, we are planning to schedule the operation for all RNN. Therefore, we need to make our scheduler to be more flexible that it can take cares variable types of structure of RNN. Thus, we adjust our schedule by adding an additional task to implement and benchmark 3 to 4 variants of RNN in order to learn the variant and invariant between different RNN. 
 
-<br/>
 Detailed schedule for the coming weeks
 --------------------------------------
 
@@ -42,7 +39,6 @@ Detailed schedule for the coming weeks
 <br/>**5.10**<br/>
 - Wrap up and work on the final report.
 
-<br/>
 What we can present on May 12nd
 -------------------------------
 Our ideal plan for the parallelism competition is to:
@@ -50,14 +46,12 @@ Our ideal plan for the parallelism competition is to:
 - A graph of running time comparison between the LSTM baseline, our scheduling optimized LSTM, and cuDNN’s fused LSTM implementation.
 - A graph of running time comparison between our optimized LSTM and LSTM implemented with dynamic RNN.
 
-<br/>
 Some issues that we concern
 ---------------------------
 - Need to figure out variant and invariant in different types of RNNs.
 - Scheduling dynamic RNN cells could be tricky.
 - How to design an easy-to-use DSL for users, while enable them to express complex RNN structures.
 
-<br/>
 Reference
 ---------
 \[1]: CS231n Lecture 10 - Recurrent Neural Networks: https://www.youtube.com/watch?v=iX5V1WpxxkY\ <br/>
