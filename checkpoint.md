@@ -1,5 +1,8 @@
-[Proposal](/index.md)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[Proposal](/index.md)&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
 [Checkpoint](/checkpoint.md)
+
+Project Checkpoint
+==================
 
 **Yifan Jiang(yjiang1)**		**Xiangguang Zheng(xiangguz)**
 
