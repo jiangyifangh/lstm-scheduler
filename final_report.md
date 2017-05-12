@@ -8,7 +8,7 @@ The goal of this project is to implement a LSTM DSL(Domain Specific Language), w
 ### Background
 Long short-term memory(LSTM) is a recurrent neural network architecture that is capable of learning long-term dependencies. It has been proven to be very powerful in classifying, processing and predicting inputs with time series (composing articles, translating etc.). The image below shows a classic LSTM cell and the operations involved in it:
 
-![LSTM Cell](images/classic_lstm.png)
+<img src="images/classic_lstm.png" width="200">
 
 
 
