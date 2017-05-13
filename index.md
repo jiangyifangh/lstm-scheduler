@@ -10,7 +10,7 @@ Background
 ----------
 Long short-term memory(LSTM) is a recurrent neural network architecture that is capable of learning long-term dependencies. It has been proven to be very powerful in classifying, processing and predicting inputs with time series (composing articles, translating etc.). The image below shows a classic LSTM cell and the operations involved in it:
 
-<img src="images/classic_lstm.png" width="400">
+<img src="images/classic_lstm.png" width="600" align="middle">
 
 
 
@@ -19,11 +19,17 @@ Long short-term memory(LSTM) is a recurrent neural network architecture that is 
 
 Challenges in LSTM scheduler
 ----------------------------
-1. There exist dependencies between gates for some LSTM variants(shown in Figure ). Some matrix multiplications can not be combined since they depend on each other. The scheduler needs to explore independent matrix multiplications and allocate the weights in contiguous memory so that they can be combined.
+1. There exist dependencies between gates for some LSTM variants(shown in Figure #). Some matrix multiplications can not be combined since they depend on each other. The scheduler needs to explore independent matrix multiplications and allocate the weights in contiguous memory so that they can be combined.
 2. LSTM variants have different element-wise operations that can not be scheduled statically. The scheduler needs to explore potential element-wise blocks and generate a fused Cuda kernel for each of them.
 3. LSTM variants could have recurrent loops on different data. Traditional LSTM has both recurrent state and output, while GRU has only recurrent output. The scheduler should allow users to determine which part of the being recurrent.
 
-<img src="images/gru_labeled.png" width="400">
+<img src="images/gru_labeled.png" width="400" align="middle">
+<p align="center"><b>Figure #</b></p>
 
 Invariants
 ----------
+1. Hyperparameters that all LSTM variants care about. Some example are number of layers, number of time steps for each layer, number of hidden units etc.
+2. All LSTM variants (well-known) can be expressed with the same set of primitives, as shown in Figure #.
+
+<img src="images/invariants.png" width="600" align="middle">
+<p align="center"><b>Figure #</b></p>
