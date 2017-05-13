@@ -105,8 +105,8 @@ Our approach is inspired by Tensorflow's architecture - using a DAG to represent
 <img src="images/workflow.png" width="600" align="center">
 <p align="center"><b>Figure 13</b></p>
 
-------------------------------
 Results(Part 2) and Conclusion
+------------------------------
 
 Because we spent too much time in research as well as incorrectly predicted the complexity of this project, we don't have a working version yet for the dynamic scheduler. We were able to implemented the pre-processing part but not the generation of CUDA code. However, based on the optimization we applied to our design of dynamic scheduler, we predict the expect result in Figure 14.
 
