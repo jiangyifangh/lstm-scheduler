@@ -1,6 +1,6 @@
-[Proposal](/index.md)&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
+[Proposal](/proposal.md)&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
 [Checkpoint](/checkpoint.md)&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
-[Final Report](/final_report.md)
+[Final Report](/index.md)
 
 Project Proposal
 ==================
