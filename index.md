@@ -24,7 +24,7 @@ Challenges
 Static LSTM Optimization
 ------------
 Our optimizations are inspired by [this blog](https://devblogs.nvidia.com/parallelforall/optimizing-recurrent-neural-networks-cudnn-5/).
-###Combining weight matrices
+### Combining weight matrices
 The traditional LSTM formula requires to do matrix multiplication for input data with four weight matrix. Instead of do 4 matrix multiplications, we combined 4 weight matrix together to  do a combined matrix multiplication. Overall, we reduce 8 matrix multiplication to 2 for both R*h and W*x.
 
 Figure 2&3 show the details of combined matrix multiplication:
@@ -39,17 +39,17 @@ In order to do combined matrix multiplication correctly, we need to stack 4 matr
 <img src="images/matrix3.png" width="600" align="center">
 <p align="center"><b>Figure 4</b></p>
 
-###Fusing element-wise operations
+### Fusing element-wise operations
 
 Besides the 8 matrix multiplications, the rest of the computations are all elementwise operations. Therefore, we can avoid the overhead of launching multiple kernels by combining these computations into one kernel.
 
-###Combining input matrices  
+### Combining input matrices  
 For matrix multiplication between W and x, dependency relationship is in vertical direction, because the input x at time t only depends on the previous layer at time t. Therefore, we are able to combine the input matrix x in contiguous horizontal node to achieve better performance.
 
 <img src="images/op4.png" width="600" align="center">
 <p align="center"><b>Figure 5</b></p>
 
-###Parallelizing multiple layers
+### Parallelizing multiple layers
 There are two dependency relationships in LSTM, input x at time tis depend on previous layer at time t (the node below), input h is depend on same layer at time t - 1(the node to the left). Therefore, an approach to achieve parallelism between multiple layers is to run nodes in diagonal at the same time, as the graph shown below.
 
 <img src="images/layer_op.png" width="600" align="center">
@@ -93,9 +93,9 @@ Our approach is inspired by Tensorflow's architecture - using a DAG to represent
 <p align="center"><b>Figure 11</b></p>
 
 - The user-defined model is then pre-processed by the intermediate layer so that:
-··1. All element-wise operation blocks are explored and fused into a special fused node.
-··2. All the potential matrix multiplication comibination are explored.
-··3. Temporary data requriement is analyzed. In LSTM scheduler, temporary data is used to store the output of matrix multiplication and fused element-wise nodes.
+1. All element-wise operation blocks are explored and fused into a special fused node.
+2. All the potential matrix multiplication comibination are explored.
+3. Temporary data requriement is analyzed. In LSTM scheduler, temporary data is used to store the output of matrix multiplication and fused element-wise nodes.
 
 <img src="images/pre_processed.png" width="400" align="center">
 <p align="center"><b>Figure 12</b></p>
@@ -124,7 +124,7 @@ References
 \[4]: Lipton, Z. C., Berkowitz, J., & Elkan, C. (2015). A Critical Review of Recurrent Neural Networks for Sequence Learning. <br/>
 \[5]: Nvidia. cuBLAS toolkit documentation: http://docs.nvidia.com/cuda/cublas/#axzz4fJQIdbFQ <br/>
 \[6]: Nvidia. cuDNN User Manual: https://developer.nvidia.com/cudnn <br/>
-\[7]: Nvidia. Optimizing Recurrent Neural Networks in cuDNN 5: https://devblogs.nvidia.com/parallelforall/optimizing-recurrent-neural-networks-cudnn-5/< br/>
+\[7]: Nvidia. Optimizing Recurrent Neural Networks in cuDNN 5: https://devblogs.nvidia.com/parallelforall/optimizing-recurrent-neural-networks-cudnn-5/ <br/>
 \[8]: Engel, Jesse. "Optimizing RNNs with Differentiable Graphs." Baidu Silicon Valley AI Lab <br/>
 
 
