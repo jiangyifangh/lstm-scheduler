@@ -1,63 +1,29 @@
-[Proposal](/index.md)&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
-[Checkpoint](/checkpoint.md)&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
-[Final Report](/final_report.md)
-
-Project Proposal
-==================
+[Proposal](/index.md)          [Checkpoint](/checkpoint.md)        [Final Report](/final_report.md)
 
 **Yifan Jiang(yjiang1)**		**Xiangguang Zheng(xiangguz)**
 
-### Summary
+Summary
+-------
+The goal of this project is to implement a LSTM DSL(Domain Specific Language), which provides RNN researchers a set of handy primitives to experiment with different LSTM-like RNN structures, which are then scheduled and run on GPUs in an efficient way. To achieve the goal of scheduling LSTM network dynamically, we started from optimizing the feedforward process of  the classic LSTM network in a static way using Cuda blocks and CuBlas. Referring to the technical blog [link] by NVIDIA's team, we implemented a series of optimizations and achieved a ~776x speedup compared to the native python implementation (not our main focus) and a ~10x speedup compared to the naive LSTM implementation in Cuda (both run on GHC machines).  Then we designed a generalized and schedulable LSTM engine, targeting to get closed to the performance achieved through static optimization as much as possible. Due to time constraint, we shifted our focus to building an IR (intermediate representation) in C++ and cuda, which acts as the backend engine of the DSL frontend in our original plan. This LSTM scheduler implementation applied several optimizationsis expected to achieve a speedup around ~4x compared to the naive CUDA implementation and ~0.8x compared to the static LSTM optimization.
 
-We are going to build a mini-DSL(a Python library) for defining an LSTM, and then generate code for evaluating the network by assembling basic blocks from cuDNN or cuBLAS.
+Background
+----------
+Long short-term memory(LSTM) is a recurrent neural network architecture that is capable of learning long-term dependencies. It has been proven to be very powerful in classifying, processing and predicting inputs with time series (composing articles, translating etc.). The image below shows a classic LSTM cell and the operations involved in it:
 
-### Background
+<img src="images/classic_lstm.png" width="400">
 
-Implementing cuDNN operations are very expensive, therefore there are only basic operations defined in cuDNN. If the operation is not defined in cuDNN, the performance would be seriously downgraded, because the alternative implementation in python or C wouldn't take advantages of GPU. So the current situation is that the performance would be either extremely good if cuDNN has implemented the operation or extremely bad if cuDNN does not. We want an intermediate solution that is able to auto generate the code by assembling the basic block from cuDNN in order to get not optimal but acceptable performance, but mostly, much more convenient compared to implementing a new operation directly from cuDNN and provides a more generic interface.
 
-### Challenges
 
-- Though both of us have adequate knowledge in deep learning (mainly convolutional neural network), we have no previous experience in RNN/LSTM. It would take us around a week to fully understand it and implement it in Python.
-- Designing the scheduling language is an important component of this project, which requires us a deep understanding of LSTM and a careful thought of what primitives we would include in the language. Neither of us is familiar with code generation. We need to spend some time to learn the code generation procedure.
 
-### Resources
 
-We plan to use P2.xlarge from Amazon aws, equipping with NVIDIA Tesla K80 GPU, or **equivalent** machines equipped with GPUs. 
 
-Since no previous work has been done in this area so we will start from scratch. The reference we will review includes LSTM/RNN, Halide code base(which has a scheduling language for image processing code), cuDNN documentation, Numba and code generation tutorial etc.
+Challenges in LSTM scheduler
+----------------------------
+1. There exist dependencies between gates for some LSTM variants(shown in Figure ). Some matrix multiplications can not be combined since they depend on each other. The scheduler needs to explore independent matrix multiplications and allocate the weights in contiguous memory so that they can be combined.
+2. LSTM variants have different element-wise operations that can not be scheduled statically. The scheduler needs to explore potential element-wise blocks and generate a fused Cuda kernel for each of them.
+3. LSTM variants could have recurrent loops on different data. Traditional LSTM has both recurrent state and output, while GRU has only recurrent output. The scheduler should allow users to determine which part of the being recurrent.
 
-### Goals and Deliverables
+<img src="images/gru_labeled.png" width="400">
 
-The deliverable is a DSL (a Python program) that is able to define an LSTM from user's input using basic block implementation from cuDNN. Our goal is to achieve significant speed up compared to the python/C implementation by exploring parallelism to the max extent and the performance should be close to the native cuDNN implementation. The extra goal is to make our DSL to support more generic deep learning model.
-
-Extra Goal: make our DSL to support more generic deep learning model. Specifically, our DSL is able to support more deep learning models without need to code extra interfaces for those.
-
-### Platform Choice
-
-The language we decided to use to implement our DSL module is Python, since it is easy to use and learn for non-programmer and has good community support for deep learning packages. In addition, the level of the language is about right, where the user only defines what to do, not how to do, and the developer can optimize the operations a lot under the hood.
-
-### Schedule
-
-**4.11 ~ 4.17** 
-
-- Research and learning (LSTM, cuDNN/cuBLAS, code generation).
-- Implement a baseline LSTM model in Python.
-
-**4.18 ~ 4.24**
-
-- Experiment with cuDNN code generation from simple operations.
-- Implement LSTM using cuDNN/cuBLAS.
-- Design DSL primitives to describe LSTM variants.
-
-**4.25 ~ 5.1**
-
-- Prepare final exam on 5.1
-- Generate cuDNN/cuBLAS blocks from DSL.
-
-**5.2 ~ 5.8**
-
-- Optimize scheduling decision/LSTM performance. 
-
-**5.9 ~ 5.11**
-
-- Prepare for final report and presentation (if selected)
+Invariants
+----------
